@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,37 +7,161 @@
 </head>
 
 <body>
-    <nav class="nav">
-        <div class="row">
-            <div class="col-3">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
-                        aria-controls="v-pills-home" aria-selected="true">Home</a>
-                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
-                        aria-controls="v-pills-profile" aria-selected="false">Doações</a>
-                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
-                        aria-controls="v-pills-messages" aria-selected="false">Instituições</a>
-                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
-                        aria-controls="v-pills-settings" aria-selected="false">Configurações</a>
+
+    <ng-sidebar-container>
+
+        <ng-sidebar id="sidebar" position="left" animate="true" [opened]="opened" mode="push">
+            <div class="container">
+                <div class="row" style="float: left;">
+                    <fa-icon transform="grow-30" style="color: white;padding: 20px 20px;" id="profile" [icon]="faUser">
+                    </fa-icon>
+                </div>
+                <div class="row" style="float: center;padding: 20px 40px;">
+                    <h4 id='profile' class="font-weight-bold" style="font-family: 'Barlow', sans-serif;">
+                        <a href="/dashboard" id="gw">gw</a><a
+                            style="font-weight:500;color: black;text-shadow: 1px 1px #0066be;"
+                            href="/dashboard">Donator</a></h4>
                 </div>
             </div>
-            <div class="col-9">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                        aria-labelledby="v-pills-home-tab">...</div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                        aria-labelledby="v-pills-profile-tab">
-                        ...</div>
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                        aria-labelledby="v-pills-messages-tab">
-                        ...</div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
-                        aria-labelledby="v-pills-settings-tab">
-                        ...</div>
+            <hr>
+            <ul class="list-group">
+                <li class="list-group-item" active [routerLink]="['/dashboard']"><a>
+                        <i style="position: absolute; left: 0px;" class="material-icons">home</i>
+                        Home</a></li>
+                <li class="list-group-item" [routerLink]="['/dashboard/doacoes']"><a>
+                        <i style="position: absolute; left: 0px;" class="material-icons">redeem</i>
+                        Doações</a></li>
+
+                <li class="list-group-item" [routerLink]="['/conta']"><a>
+                        <i style="position: absolute; left: 0px;" class="material-icons">account_box</i>
+                        Conta</a></li>
+            </ul>
+
+
+        </ng-sidebar>
+
+        <div ng-sidebar-content style="width: 100%; overflow:hidden">
+
+            <header>
+                <button type="button" class="btn btn-default" aria-hidden="true" id="arrow" (click)="toggleSidebar()">
+                    <fa-icon transform="grow-20" style="color: white;" [icon]="arrow"></fa-icon>
+                </button>
+                <span style="padding-left: 10px ;">Dashboard</span>
+            </header>
+            <section>
+                <div class="wrapper left" style="padding: 10px 10px;">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4 class="font-weight-bold"
+                                style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-style: italic;">
+                                <a style="color: red;">G</a>ood <a style="color: red;">W</a>ill Donations</h4>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+
+                <div *ngIf="showMsg" style="position: fixed; width: max-content;">
+                    <ngb-alert *ngFor="let alert of alerts" [type]="alert.type" style="position: fixed; width: 100%;"
+                        (close)="close(alert)">
+                        {{ alert.message }} Doação efetuada com sucesso !</ngb-alert>
+                </div>
+                <div class="container">
+
+                    <ul class="instClass" ([ngModel])="instituicoes" *ngFor="let i of instituicoes">
+                        <li class="inst">
+                            <img src='../../../assets/img/{{i.img}}' width="300" height="200" />
+                            <h4>{{i.nome}}</h4>
+                        </li>
+                        <li class="inst">
+                            <div class="card">
+                                <button (click)="open(content,i.id,i.nome)" style="font-weight: 600;" type="button"
+                                    class="btn btn-success">Doar
+                                    <i style="position: absolute; right: 0px;" class="material-icons md-48">add</i>
+                                </button>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--MODAL-->
+                <div class="container center">
+                    <ng-template #content let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Fazer doação</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <form #frm="ngForm" (ngSubmit)="onSubmit(frm)" novalidate>
+                                <div class="form-group">
+                                    <label for="doador">Insira seu ID</label>
+                                    <input id="doador" [(ngModel)]="doacoes.doador" name="doador" class="form-control"
+                                        type="text" placeholder="*seu id de doador" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="instituicoes">Instituição</label>
+                                    <input readonly value={{id}} id="instituicao" [(ngModel)]="doacoes.instituicao"
+                                        name="instituicao" class="form-control" type="text" placeholder={{nome}}>
+                                </div>
+
+                                <label for="data">Data da doação</label>
+                                <div class="form-group">
+                                    <input readonly value={{getDate()}} id="data_doacao"
+                                        [(ngModel)]="doacoes.data_doacao" name="data_doacao" class="form-control"
+                                        type="text" placeholder={{getDate()}}>
+                                </div>
+                                <div class="form-group">
+                                    <label for="horario_doacao">Horário da doação</label>
+                                    <input readonly value={{getTime()}} id="horario_doacao"
+                                        [(ngModel)]="doacoes.horario_doacao" name="horario_doacao" class="form-control"
+                                        type="text" placeholder={{getTime()}}>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valor">Valor</label>
+                                    <input (blur)="alert(doacoes.valor)" id="valor" [(ngModel)]="doacoes.valor " name="valor" class="form-control"
+                                        type="number" placeholder="*valor" required>
+                                        <span>{{doacoes.valor |currency: 'BRL'}}</span>
+                                </div>
+                                
+                                <button id="btnSubmit" [disabled]="frm.invalid" type="submit" class="btn btn-success"
+                                    style="width: 250px; height: 50px; border-radius: 8px;">Cadastrar</button>
+                            </form>
+                            <div class="modal-footer"></div>
+                       
+                        
+
+
+
+                        </div>
+
+                    </ng-template>
+                </div>
+
+
+
+
+
+
+                <footer>
+                    <div class="card-body my-footer">
+                        <blockquote class="blockquote mb-0">
+                            <p>We make a living by what we get, but we make a life by what we give</p>
+                            <footer class="blockquote-footer">Winston Churchill<cite title="Source Title"></cite>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </footer>
+            </section>
         </div>
-    </nav>
+
+
+
+    </ng-sidebar-container>
 </body>
 
 </html>

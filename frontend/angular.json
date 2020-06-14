@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -88,7 +89,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           }
@@ -123,6 +125,6 @@
   },
   "defaultProject": "frontend",
   "cli": {
-    "analytics": "e9b75b04-15b3-468c-b90b-03eadb2194b0"
+    "analytics": "f88d3b00-c31f-4ba7-a618-52ebb51edcc5"
   }
 }
