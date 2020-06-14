@@ -7,18 +7,26 @@ from django.template import loader
 from .serializers import *
 # Create your views here.
 
-def index(request):
-    template = loader.get_template('index.html')
-    return HttpResponse(template.render({},request))
+
 class DoadorViewSet(viewsets.ModelViewSet):
     queryset = Doador.objects.all()
     serializer_class = DoadorSerializer
 class DoacaoViewSet(viewsets.ModelViewSet):
     queryset = Doacao.objects.all()
     serializer_class = DoacaoSerializer
+    def __str__():
+        print(queryset.doador)
+        return f'{queryset.doador}'
+       
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 class InstituicaoViewSet(viewsets.ModelViewSet):
-    queryset = Item.objects.all()
+    queryset = Instituicao.objects.all()
     serializer_class = InstituicaoSerializer
+class CategoriaViewSet(viewsets.ModelViewSet):
+    queryset = Categoria_item.objects.all()
+    serializer_class = Categoria_itemSerializer
+class ItemsDoacaoViewSet(viewsets.ModelViewSet):
+    queryset = Items_doacao.objects.all()
+    serializer_class = ItemsDoacaoSerializer

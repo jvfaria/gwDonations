@@ -4,11 +4,11 @@ from .models import *
 class DoadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doador
-        fields = ['id', 'nome', 'registro', 'telefone', 'email', 'endereco']
+        fields = ['id', 'nome', 'tipo', 'registro', 'telefone', 'email', 'endereco','senha']
 class DoacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doacao
-        fields = ['id','data_doacao', 'horario_doacao', 'valor']
+        fields = ['id','doador','instituicao', 'data_doacao', 'horario_doacao', 'valor']
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,4 +17,12 @@ class ItemSerializer(serializers.ModelSerializer):
 class InstituicaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instituicao
-        fields = ['id','nome', 'endereco', 'cidade', 'estado']
+        fields = ['id','img','nome', 'endereco', 'cidade', 'estado']
+class Categoria_itemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categoria_item
+        fields = ['id', 'nome']
+class ItemsDoacaoSerializer:
+    class Meta:
+        model = Items_doacao
+        fields = ['id','item_id','doacao_id']

@@ -1,0 +1,75 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <ng-sidebar-container>
+
+        <ng-sidebar id="sidebar" position="left" animate="true" [opened]="opened" mode="push">
+            <div class="container">
+                <div class="row" style="float: left;">
+                    <fa-icon transform="grow-30" style="color: white;padding: 20px 20px;" id="profile" [icon]="faUser">
+                    </fa-icon>
+                </div>
+                <div class="row" style="float: center;padding: 20px 40px;">
+                    <h4 id='profile' class="font-weight-bold" style="font-family: 'Barlow', sans-serif;">
+                        <a href="/dashboard" id="gw">gw</a><a
+                            style="font-weight:500;color: black;text-shadow: 1px 1px #0066be;"
+                            href="/dashboard">Donator</a></h4>
+                </div>
+            </div>
+            <hr>
+            <ul class="list-group">
+                <li class="list-group-item" active><a href="">Home</a></li>
+                <li class="list-group-item"><a href="dashboard/doacoes">Doações</a></li>
+                <li class="list-group-item"><a href="'dashboard/conta">Conta</a></li>
+            </ul>
+
+
+        </ng-sidebar>
+
+        <div ng-sidebar-content>
+            <header>
+                <button type="button" class="btn btn-default" aria-hidden="true" id="arrow" (click)="toggleSidebar()">
+                    <fa-icon transform="grow-20" style="color: white;" [icon]="arrow"></fa-icon>
+                </button>
+                <span style="padding-left: 10px ;">Doacões</span>
+            </header>
+            <section>
+                <div class="container center">
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Area</th>
+                                <th scope="col">Population</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>
+                                    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/'"
+                                        class="mr-2" style="width: 20px">
+                                    
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </section>
+        </div>
+
+    </ng-sidebar-container>
+</body>
+
+</html>
