@@ -91,4 +91,4 @@ To run locally, do the usual:
    ./manage.py createsuperuser
 
 ## SERVE
-Finally run the command on the root file: ```py manage.py runserver```
+Finally run the command in the root file: ```py manage.py runserver```
