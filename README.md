@@ -1,6 +1,8 @@
 # gwDonations
 TRABALHO PI UNI BH 2020 // O sistema consiste em intermediar a relação entre instituições que necessitam de qualquer tipo de doações e instituições parceiras que desejam doar . É uma solução de caráter social cujo não consiste em retorno e fins lucrativos .
 
+PI UNI BH 2020 PROJECT // The system consists of intermediating the relationship between institutions that need any type of donations and partner institutions that wish to donate. It is a social solution that does not consist of return and profit.
+
 # RUNNING FRONTEND Intern + Angular
 
 
